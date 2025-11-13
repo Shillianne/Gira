@@ -1,7 +1,7 @@
 import MessageInput from "@/components/MessageInput";
 import SvgIcon from "@/components/SvgIcon";
 import {icons} from "@/constants/icons";
-import {Keyboard, TouchableOpacity, TouchableWithoutFeedback, KeyboardAvoidingView } from "react-native";
+import { TouchableOpacity, KeyboardAvoidingView, Text } from "react-native";
 import { View } from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import { useSharedValue, withTiming, ReduceMotion, Easing, runOnJS } from "react-native-reanimated";
@@ -11,6 +11,7 @@ import {Platform} from "react-native";
 import { Link } from "expo-router";
 import ChatBox from "@/components/ChatBox";
 import SidePanel from "@/components/SidePanel";
+import ModelStatus from "@/components/ModelStatus";
 
 export default function Index() {
   const { setOverlay } = useFloatingOverlay();
@@ -52,7 +53,7 @@ export default function Index() {
 			behavior={Platform.OS === "ios" ? "padding" : "height"}
 		>
 			<View
-				className="flex flex-row justify-between mx-8 mt-3"
+				className="flex flex-row justify-between align-center mx-8 mt-3 pb-4"
 			>
 				<TouchableOpacity
 					className="px-1 py-1"
@@ -60,22 +61,13 @@ export default function Index() {
 				>
 					<SvgIcon Icon={icons.side_right} style={{ color: "#212121" }}/>
 				</TouchableOpacity>
+				{/*<ModelStatus />*/}
 				<Link href="/settings/modelList" asChild>
 					<TouchableOpacity>
 						<SvgIcon Icon={icons.burger} style={{ color: "#212121" }}/>
 					</TouchableOpacity>
 				</Link>
 			</View>
-			{/*
-			<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-				<View
-					className="flex-1 flex-col justify-end items-center mb-4"
-				>
-					<ChatBox />
-					<MessageInput />
-				</View>
-			</TouchableWithoutFeedback>
-			*/}
 			<View
 				className="flex-1 flex-col justify-end items-center mb-4"
 			>

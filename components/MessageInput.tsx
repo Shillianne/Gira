@@ -3,15 +3,20 @@ import React, {useState} from 'react';
 import SvgIcon from './SvgIcon';
 import {icons} from '@/constants/icons';
 import {useConversationContext} from './ConversationContext';
-import {sendMessage} from '@/services/api';
+import {createConversation, sendMessage} from '@/services/api';
 import { Keyboard } from 'react-native';
 
 const MessageInput = () => {
 	const [message, setMessage] = useState("");
-	const { setMessageTaskId } = useConversationContext();
+	const { id, setId, setTitle, setMessageTaskId } = useConversationContext();
 
 	const handlePress = async () => {
 		if (message) {
+			if (!id) {
+				const data = await createConversation();
+				setTitle(data.title);
+				setId(data.id);
+			}
 			const taskId = await sendMessage(message);
 			setMessageTaskId(taskId);
 			setMessage("");
@@ -21,7 +26,7 @@ const MessageInput = () => {
 
 	return (
 		<View
-			className='flex flex-row justify-between items-end rounded-[20] border-[1px] border-primary w-[90%] py-2 px-3'
+			className='flex flex-row justify-between items-end rounded-[20] border-[1px] border-primary w-[90%] py-2 px-3 mt-2'
 		>
 			<TextInput
 				placeholder='Send a message...'
